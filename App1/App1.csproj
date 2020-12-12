@@ -164,18 +164,18 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DryWetMidi\Melanchall.DryWetMidi.csproj">
-      <Project>{499fdd77-17e3-4249-aae5-50941a47d35e}</Project>
-      <Name>Melanchall.DryWetMidi</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <SDKReference Include="Microsoft.Midi.GmDls, Version=10.0.19041.0">
       <Name>Microsoft General MIDI DLS for Universal Windows Apps</Name>
     </SDKReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="App1_TemporaryKey.pfx" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Melanchall.DryWetMidi.UWP\Melanchall.DryWetMidi.UWP.csproj">
+      <Project>{3b259086-6e7d-4ecc-a419-094f71503f63}</Project>
+      <Name>Melanchall.DryWetMidi.UWP</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
