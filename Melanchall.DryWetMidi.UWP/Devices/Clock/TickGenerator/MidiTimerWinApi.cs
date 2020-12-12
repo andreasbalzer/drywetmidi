@@ -28,7 +28,7 @@ namespace Melanchall.DryWetMidi.Devices
 
         #region Methods
 
-        private static System.Timers.Timer timer;
+        private static Timer timer;
 
         public static uint timeGetDevCaps(ref TIMECAPS timeCaps, uint sizeTimeCaps)
         {
@@ -54,14 +54,14 @@ namespace Melanchall.DryWetMidi.Devices
         {
             if (timer != null)
             {
-                return 1;
+                timer.Stop();
+                timer.Dispose();
             }
 
-            timer = new System.Timers.Timer(uResolution);
-            timer.Elapsed += (Object source, ElapsedEventArgs e) => lpTimeProc(1, 0, 0, 0, 0);
+            timer = new Timer(uResolution);
+            timer.Elapsed += (object source, ElapsedEventArgs e) => lpTimeProc(1, 0, 0, 0, 0);
             timer.Enabled = true;
             timer.AutoReset = true;
-            timer.Interval = uResolution;
             timer.Start();
 
             return 1;

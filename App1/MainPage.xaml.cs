@@ -44,6 +44,7 @@ namespace App1
 
             var outputDevice = OutputDevice.GetByName("Microsoft GS Wavetable Synth");
             var playback = midiFile.GetPlayback(outputDevice);
+            playback.Speed = 4.0;
             playback.Play();
         }
 
