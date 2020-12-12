@@ -1,0 +1,30 @@
+﻿API midiInAddBuffer in winmm.dll is not supported for this application type. App1.dll calls this API.
+API midiInClose in winmm.dll is not supported for this application type. App1.dll calls this API.
+API midiInGetDevCapsA in winmm.dll is not supported for this application type. App1.dll calls this API.
+API midiInGetErrorTextA in winmm.dll is not supported for this application type. App1.dll calls this API.
+API midiInGetNumDevs in winmm.dll is not supported for this application type. App1.dll calls this API.
+API midiInOpen in winmm.dll is not supported for this application type. App1.dll calls this API.
+API midiInPrepareHeader in winmm.dll is not supported for this application type. App1.dll calls this API.
+API midiInReset in winmm.dll is not supported for this application type. App1.dll calls this API.
+API midiInStart in winmm.dll is not supported for this application type. App1.dll calls this API.
+API midiInStop in winmm.dll is not supported for this application type. App1.dll calls this API.
+API midiInUnprepareHeader in winmm.dll is not supported for this application type. App1.dll calls this API.
+API midiOutClose in winmm.dll is not supported for this application type. App1.dll calls this API.
+API midiOutGetDevCapsA in winmm.dll is not supported for this application type. App1.dll calls this API.
+API midiOutGetErrorTextA in winmm.dll is not supported for this application type. App1.dll calls this API.
+API midiOutGetNumDevs in winmm.dll is not supported for this application type. App1.dll calls this API.
+API midiOutGetVolume in winmm.dll is not supported for this application type. App1.dll calls this API.
+API midiOutLongMsg in winmm.dll is not supported for this application type. App1.dll calls this API.
+API midiOutOpen in winmm.dll is not supported for this application type. App1.dll calls this API.
+API midiOutPrepareHeader in winmm.dll is not supported for this application type. App1.dll calls this API.
+API midiOutSetVolume in winmm.dll is not supported for this application type. App1.dll calls this API.
+API midiOutShortMsg in winmm.dll is not supported for this application type. App1.dll calls this API.
+API midiOutUnprepareHeader in winmm.dll is not supported for this application type. App1.dll calls this API.
+API timeKillEvent in winmm.dll is not supported for this application type. App1.dll calls this API.
+API timeSetEvent in winmm.dll is not supported for this application type. App1.dll calls this API.
+
+
+
+midiOutGetDevCaps
+midiOutOpen
+midiOutShortMsg

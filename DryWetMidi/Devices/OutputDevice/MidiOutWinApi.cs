@@ -36,38 +36,61 @@ namespace Melanchall.DryWetMidi.Devices
 
         #region Methods
 
-        [DllImport("winmm.dll", SetLastError = true, CharSet = CharSet.Ansi, EntryPoint = "midiOutGetDevCapsA", ExactSpelling = true)]
-        public static extern uint midiOutGetDevCaps(IntPtr uDeviceID, ref MIDIOUTCAPS lpMidiOutCaps, uint cbMidiOutCaps);
+        public static uint midiOutGetDevCaps(IntPtr uDeviceID, ref MIDIOUTCAPS lpMidiOutCaps, uint cbMidiOutCaps)
+        {
+            return MidiWinApi.MMSYSERR_NOERROR;
+        }
 
-        [DllImport("winmm.dll", CharSet = CharSet.Ansi, EntryPoint = "midiOutGetErrorTextA", ExactSpelling = true)]
-        public static extern uint midiOutGetErrorText(uint mmrError, StringBuilder pszText, uint cchText);
+        public static uint midiOutGetErrorText(uint mmrError, StringBuilder pszText, uint cchText)
+        {
+            return MidiWinApi.MMSYSERR_NOERROR;
+        }
 
-        [DllImport("winmm.dll", ExactSpelling = true)]
-        public static extern uint midiOutGetNumDevs();
+        public static uint midiOutGetNumDevs()
+        {
+            return MidiWinApi.MMSYSERR_NOERROR;
+        }
 
-        [DllImport("winmm.dll", ExactSpelling = true)]
-        public static extern uint midiOutOpen(out IntPtr lphmo, int uDeviceID, MidiWinApi.MidiMessageCallback dwCallback, IntPtr dwInstance, uint dwFlags);
+        public static uint midiOutOpen(out IntPtr lphmo, int uDeviceID, MidiWinApi.MidiMessageCallback dwCallback, IntPtr dwInstance, uint dwFlags)
+        {
+            lphmo = new IntPtr(0);
+            return MidiWinApi.MMSYSERR_NOERROR;
+        }
 
-        [DllImport("winmm.dll", ExactSpelling = true)]
-        public static extern uint midiOutClose(IntPtr hmo);
+        public static uint midiOutClose(IntPtr hmo)
+        {
+            return MidiWinApi.MMSYSERR_NOERROR;
+        }
 
-        [DllImport("winmm.dll", ExactSpelling = true)]
-        public static extern uint midiOutShortMsg(IntPtr hMidiOut, uint dwMsg);
+        public static uint midiOutShortMsg(IntPtr hMidiOut, uint dwMsg)
+        {
+            return MidiWinApi.MMSYSERR_NOERROR;
+        }
 
-        [DllImport("winmm.dll", ExactSpelling = true)]
-        public static extern uint midiOutGetVolume(IntPtr hmo, ref uint lpdwVolume);
+        public static uint midiOutGetVolume(IntPtr hmo, ref uint lpdwVolume)
+        {
+            return MidiWinApi.MMSYSERR_NOERROR;
+        }
 
-        [DllImport("winmm.dll", ExactSpelling = true)]
-        public static extern uint midiOutSetVolume(IntPtr hmo, uint dwVolume);
+        public static uint midiOutSetVolume(IntPtr hmo, uint dwVolume)
+        {
+            return MidiWinApi.MMSYSERR_NOERROR;
+        }
 
-        [DllImport("winmm.dll", ExactSpelling = true)]
-        public static extern uint midiOutPrepareHeader(IntPtr hmo, IntPtr lpMidiOutHdr, int cbMidiOutHdr);
+        public static uint midiOutPrepareHeader(IntPtr hmo, IntPtr lpMidiOutHdr, int cbMidiOutHdr)
+        {
+            return MidiWinApi.MMSYSERR_NOERROR;
+        }
 
-        [DllImport("winmm.dll", ExactSpelling = true)]
-        public static extern uint midiOutUnprepareHeader(IntPtr hmo, IntPtr lpMidiOutHdr, int cbMidiOutHdr);
+        public static uint midiOutUnprepareHeader(IntPtr hmo, IntPtr lpMidiOutHdr, int cbMidiOutHdr)
+        {
+            return MidiWinApi.MMSYSERR_NOERROR;
+        }
 
-        [DllImport("winmm.dll", ExactSpelling = true)]
-        public static extern uint midiOutLongMsg(IntPtr hmo, IntPtr lpMidiOutHdr, int cbMidiOutHdr);
+        public static uint midiOutLongMsg(IntPtr hmo, IntPtr lpMidiOutHdr, int cbMidiOutHdr)
+        {
+            return MidiWinApi.MMSYSERR_NOERROR;
+        }
 
         #endregion
     }
