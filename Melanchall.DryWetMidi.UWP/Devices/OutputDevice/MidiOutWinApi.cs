@@ -41,15 +41,21 @@ namespace Melanchall.DryWetMidi.Devices
         #endregion
 
         private static IMidiOutPort s_midiOutPort;
+        private static DeviceInformationCollection deviceInformationCollection;
 
         #region Methods
 
         private static DeviceInformationCollection GetDevices()
         {
-            string midiOutportQueryString = MidiOutPort.GetDeviceSelector();
-            Task<DeviceInformationCollection> getDeviceInformationTask = DeviceInformation.FindAllAsync(midiOutportQueryString).AsTask();
-            getDeviceInformationTask.Wait();
-             return getDeviceInformationTask.Result;
+            if (deviceInformationCollection == null)
+            {
+                string midiOutportQueryString = MidiOutPort.GetDeviceSelector();
+                Task<DeviceInformationCollection> getDeviceInformationTask = DeviceInformation.FindAllAsync(midiOutportQueryString).AsTask();
+                getDeviceInformationTask.Wait();
+                deviceInformationCollection =  getDeviceInformationTask.Result;
+            }
+
+            return deviceInformationCollection;
         }
 
         public static uint midiOutGetDevCaps(IntPtr uDeviceID, ref MIDIOUTCAPS lpMidiOutCaps, uint cbMidiOutCaps)
