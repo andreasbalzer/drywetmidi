@@ -1,8 +1,12 @@
 ﻿using System;
+using System.IO;
 using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
+using System.Threading.Tasks;
 using Windows.Devices.Enumeration;
 using Windows.Devices.Midi;
+using Windows.Storage.Streams;
 
 namespace Melanchall.DryWetMidi.Devices
 {
@@ -36,10 +40,29 @@ namespace Melanchall.DryWetMidi.Devices
 
         #endregion
 
+        private static IMidiOutPort s_midiOutPort;
+
         #region Methods
+
+        private static DeviceInformationCollection GetDevices()
+        {
+            string midiOutportQueryString = MidiOutPort.GetDeviceSelector();
+            Task<DeviceInformationCollection> getDeviceInformationTask = DeviceInformation.FindAllAsync(midiOutportQueryString).AsTask();
+            getDeviceInformationTask.Wait();
+             return getDeviceInformationTask.Result;
+        }
 
         public static uint midiOutGetDevCaps(IntPtr uDeviceID, ref MIDIOUTCAPS lpMidiOutCaps, uint cbMidiOutCaps)
         {
+            DeviceInformation deviceInformation = GetDevices()[uDeviceID.ToInt32()];
+
+            lpMidiOutCaps = new MIDIOUTCAPS();
+            lpMidiOutCaps.szPname = deviceInformation.Name;
+            lpMidiOutCaps.wMid = 1;
+            lpMidiOutCaps.wChannelMask = ushort.MaxValue;
+            
+            lpMidiOutCaps.wTechnology = (ushort)OutputDeviceType.MidiPort;
+
             return MidiWinApi.MMSYSERR_NOERROR;
         }
 
@@ -50,25 +73,56 @@ namespace Melanchall.DryWetMidi.Devices
 
         public static uint midiOutGetNumDevs()
         {
-            string midiOutportQueryString = MidiOutPort.GetDeviceSelector();
-            DeviceInformationCollection midiOutputDevices = DeviceInformation.FindAllAsync(midiOutportQueryString).Result;
-            return midiOutputDevices.Count;
-            return MidiWinApi.MMSYSERR_NOERROR;
+            return (uint)GetDevices().Count;
         }
 
         public static uint midiOutOpen(out IntPtr lphmo, int uDeviceID, MidiWinApi.MidiMessageCallback dwCallback, IntPtr dwInstance, uint dwFlags)
         {
-            lphmo = new IntPtr(0);
+            if (s_midiOutPort != null)
+            {
+                lphmo = new IntPtr(uDeviceID);
+                return MidiWinApi.MMSYSERR_NOERROR;
+            }
+
+            try
+            {
+                s_midiOutPort = MidiOutPort.FromIdAsync(GetDevices()[uDeviceID].Id).AsTask().Result;
+
+                lphmo = new IntPtr(uDeviceID);
+
+                if (s_midiOutPort == null)
+                {
+                    return MidiWinApi.MMSYSERR_ERROR;
+                }
+            }
+            catch (Exception)
+            {
+                lphmo = new IntPtr(uDeviceID);
+                return MidiWinApi.MMSYSERR_ERROR;
+            }
+
             return MidiWinApi.MMSYSERR_NOERROR;
         }
 
         public static uint midiOutClose(IntPtr hmo)
         {
+            if (s_midiOutPort != null)
+            {
+                s_midiOutPort.Dispose();
+            }
+
+            s_midiOutPort = null;
+
             return MidiWinApi.MMSYSERR_NOERROR;
         }
 
         public static uint midiOutShortMsg(IntPtr hMidiOut, uint dwMsg)
         {
+            MemoryStream outputStream = new MemoryStream();
+            byte[] bytes = BitConverter.GetBytes(dwMsg);
+            // Array.Reverse
+            outputStream.Write(bytes, 0, bytes.Length);
+            s_midiOutPort.SendBuffer(outputStream.GetWindowsRuntimeBuffer());
             return MidiWinApi.MMSYSERR_NOERROR;
         }
 
